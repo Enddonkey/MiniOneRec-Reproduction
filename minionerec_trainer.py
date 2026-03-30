@@ -576,6 +576,8 @@ class ReReTrainer(Trainer):
                                                             num_beams=self.test_beam,
                                                             num_return_sequences=self.test_beam,
                                                             do_sample=False,
+                                                            top_k=None,
+                                                            top_p=None,
                                                             pad_token_id=self.processing_class.pad_token_id,
                                                             eos_token_id=self.processing_class.eos_token_id,)
 

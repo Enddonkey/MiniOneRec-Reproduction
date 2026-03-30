@@ -393,5 +393,32 @@ class TestMiniMaxIntegration(unittest.TestCase):
         )
 
 
+class TestTestGenerationConfigHasNoTopKTopP(unittest.TestCase):
+    """Ensure test_generation_config disables top_k/top_p to avoid no-valid-token warnings."""
+
+    def test_trainer_source_sets_top_k_and_top_p_none(self):
+        """Regression test for issue #66: test_generation_config must set top_k=None, top_p=None."""
+        import ast, os
+        src = os.path.join(os.path.dirname(__file__), '..', 'minionerec_trainer.py')
+        with open(src) as f:
+            source = f.read()
+        tree = ast.parse(source)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Attribute) and target.attr == 'test_generation_config':
+                        call = node.value
+                        if isinstance(call, ast.Call):
+                            kw_map = {kw.arg: kw.value for kw in call.keywords}
+                            self.assertIn('top_k', kw_map, "test_generation_config must include top_k=None")
+                            self.assertIn('top_p', kw_map, "test_generation_config must include top_p=None")
+                            self.assertIsInstance(kw_map['top_k'], ast.Constant)
+                            self.assertIsNone(kw_map['top_k'].value, "top_k must be None")
+                            self.assertIsInstance(kw_map['top_p'], ast.Constant)
+                            self.assertIsNone(kw_map['top_p'].value, "top_p must be None")
+                            return
+        self.fail("Could not find test_generation_config assignment in minionerec_trainer.py")
+
+
 if __name__ == '__main__':
     unittest.main()
