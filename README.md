@@ -392,33 +392,6 @@ bash evaluate.sh \
 
 ---
 
-## 🤖 Supported LLM Providers
-
-MiniOneRec supports multiple LLM providers for text enrichment tasks. Configure in `api_info`:
-
-| Provider | `provider` value | Default Base URL | Example Models |
-|----------|-----------------|------------------|----------------|
-| OpenAI | `"openai"` | — | `text-davinci-003` |
-| DeepSeek | `"deepseek"` | `https://api.deepseek.com` | `deepseek-chat` |
-| [MiniMax](https://www.minimaxi.com) | `"minimax"` | `https://api.minimax.io/v1` | `MiniMax-M2.7`, `MiniMax-M2.5` |
-
----
-
-## 🔖 Citation
-
-```bib
-@misc{MiniOneRec,
-      title={MiniOneRec: An Open-Source Framework for Scaling Generative Recommendation},
-      author={Xiaoyu Kong and Leheng Sheng and Junfei Tan and Yuxin Chen and Jiancan Wu and An Zhang and Xiang Wang and Xiangnan He},
-      year={2025},
-      eprint={2510.24431},
-      archivePrefix={arXiv},
-      primaryClass={cs.IR},
-}
-```
-
----
-
 <div align="center">
 We welcome contributions from the community! 🤝
 </div>
